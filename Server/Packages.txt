@@ -4,3 +4,5 @@ procps-ng
 lua54
 lua5.4
 openssl
+php
+expect

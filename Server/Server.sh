@@ -1,10 +1,10 @@
 #!/bin/bash
-set -e
 
-sudo rm -rf ./Service .Config certs 
+export SERVER_PID=$$
+echo $SERVER_PID > SERVER_PID.txt 
 
-HS_DIR="Service"
-TORRC=".Config"
+HS_DIR="Service/"
+TORRC=".config"
 mkdir -p "$HS_DIR"
 sudo chmod 700 "$HS_DIR"
 
@@ -12,7 +12,10 @@ XMPP_PORT=32767
 
 cat <<EOF > "$TORRC"
 HiddenServiceDir $HS_DIR
-HiddenServicePort 5222 127.0.0.1:$XMPP_PORT
+HiddenServicePort 80 127.0.0.1:$XMPP_PORT
+DataDirectory TorServer
+SocksPort 127.0.0.1:9999
+ControlPort 127.0.0.1:9998
 EOF
 
 tor -f "$TORRC" &
@@ -25,7 +28,6 @@ done
 
 ONION=$(cat "$HS_DIR/hostname" | tr -d ' \t\n')
 
-echo "Onion address: $ONION"
 
 mkdir -p certs
 
@@ -52,4 +54,6 @@ EOF
 
 echo "Written Prosody config to prosody.cfg.lua"
 
-prosody --config ./prosody.cfg.lua -F 
+prosody --config ./prosody.cfg.lua -F &
+
+echo $ONION > Address.txt

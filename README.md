@@ -3,7 +3,7 @@ An ultra secure XMPP server.
 
 Todo:
 
- - [ ] Host a server to access the rotating domains
+ - [x] Host a server to access the rotating domains
  - [ ] Make a custom client to interface with a custom server in golang
  - [ ] Make a nice snack
 
