@@ -1,0 +1,6 @@
+prosody
+tor
+procps-ng
+lua54
+lua5.4
+openssl
